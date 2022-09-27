@@ -1,7 +1,7 @@
 
 class BrailleDisplay 
   def initialize
-    @lines = []
+    
   end
 
   def self.from_message(message)
@@ -14,11 +14,6 @@ class BrailleDisplay
   end
 
   def to_s
-  
+    "foo"
   end
-
-  def print
-    print self.to_s
-  end
-
 end
