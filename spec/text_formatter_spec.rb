@@ -13,7 +13,7 @@ RSpec.describe TextFormatter do
   end
 
   it 'can apply word wrap to an array of tokens' do 
-    unformatted_string = "i am using quite extremely long verbiage to demonstrate the word wrapping functionality"
+    unformatted_string = "\n\n\ni am using quite extremely long verbiage to demonstrate the word wrapping functionality"
     wrapped_tokens = TextFormatter.word_wrap(TextFormatter.tokenize(unformatted_string), 40)
     wrapped_tokens.each do |token|
       print token 

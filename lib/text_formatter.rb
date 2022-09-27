@@ -1,8 +1,27 @@
 class TextFormatter 
-  
-  def initialize 
 
+  def self.format_text(string, line_length_limit)
+    tokens = self.tokenize(string)
+    tokens = self.break_up_large_tokens(tokens, line_length_limit)
+    tokens = self.word_wrap(tokens, line_length_limit)
+    tokens = self.concatenate(tokens)
   end
+
+  def self.concatenate(tokens)
+    final_string = ""
+    for i in 0...tokens.length do 
+      tokens[i].split("").each do |char|
+        final_string << char 
+      end
+      if i != tokens.length - 1
+        if tokens[i] != "\n" && tokens[i + 1] != "\n"
+          final_string << " "
+        end
+      end
+    end
+    return final_string
+  end
+
 
   def self.tokenize(string)
     lines = []
