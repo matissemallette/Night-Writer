@@ -19,4 +19,5 @@ RSpec.describe NightWriter do
   it 'can write to file' do 
     expect(File.read(@test_argv[1])).to eq("hello, world!\nmy name is matisse.")
   end
+  
 end
