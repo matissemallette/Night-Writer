@@ -1,11 +1,11 @@
 require './lib/braille'
-require './lib/text_formatter'
 
 class BrailleDisplay 
   include Braille
 
   def initialize
-    @ascii_line_length_limit = 40
+    @text_formatter = TextFormatter.new(40)
+    @braille_grid = Array.new {Array.new(3, String.new)}
   end 
 
   def self.from_message(message)
@@ -13,11 +13,10 @@ class BrailleDisplay
   end
 
   def write(message)
-    @message = TextFormatter.format_text(message, @ascii_line_length_limit)
-    self
+    p @message
   end
 
   def to_s
-    @message
+    
   end
 end
