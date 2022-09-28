@@ -1,6 +1,8 @@
 require './lib/braille_display'
+require './lib/braille'
 
 RSpec.describe BrailleDisplay do 
+  include Braille
   before(:each) do 
     @braille_display = BrailleDisplay.new
   end
@@ -9,21 +11,30 @@ RSpec.describe BrailleDisplay do
     expect(@braille_display).to be_an_instance_of(BrailleDisplay)
   end
 
-  it 'can tokenize a string' do 
-    expect(@braille_display.tokenize("hello\nworld!")).to eq(["hello", "\n", "world!"])
+  it 'has readable attributes' do 
+    expect(@braille_display.braille_data).to be_an_instance_of(Array)
+  end
+  
+  it 'can store data based on input' do 
+    @braille_display.write("a")
+    expect(@braille_display.braille_data).to eq([[to_braille("a")]])
+    @braille_display.write("b")
+
+    expect(@braille_display.braille_data).to eq([[to_braille("a"), to_braille("b")]])
+
+    @braille_display.write("\nc")
+    expect(@braille_display.braille_data).to eq([[to_braille("a"), to_braille("b")], [to_braille("c")]])
   end
 
-  it 'can break up tokens that are too big to fit on a single line' do 
-    oversized_tokens = @braille_display.tokenize("aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz")
-    expect(@braille_display.break_up_large_tokens(oversized_tokens, 40)).to eq(["aabbccddeeffgghhiijjkkllmmnnooppqqrrsstt", "uuvvwwxxyyzz"])
+  it 'can clear its data' do 
+    @braille_display.write("a")
+    expect(@braille_display.braille_data).to eq([[to_braille("a")]])
+    @braille_display.clear 
+    expect(@braille_display.braille_data).to eq([])
   end
 
-  it 'can apply word wrap to an array of tokens' do 
-    unformatted_string = "hi i am typing -\n a long thing so i can see if this function can successfully wrap the words! blah blah blaaaaaaaaaaaah bwwwwawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawaw"
-    wrapped_tokens = @braille_display.word_wrap(@braille_display.tokenize(unformatted_string))
-    wrapped_tokens.each do |token|
-      print token 
-      print " " unless token == "\n"
-    end
+  it 'can convert its braille data into an easily printable string' do 
+    @braille_display.clear
+    @braille_display.write("a b c")
   end
 end

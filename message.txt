@@ -1,2 +1,2 @@
-hello, world!
-my name is matisse.
+Hello, world!
+My name is Matisse.
