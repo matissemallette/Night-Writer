@@ -17,7 +17,7 @@ class TextFormatter
 
   def legalize_string(string) 
     new_string = ""
-    string.split("").each do |char| 
+    string.downcase.split("").each do |char| 
       if legal_character?(char) 
         new_string << char
       end
